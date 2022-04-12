@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <algorithm>
 
 namespace TP3 {
 
@@ -122,6 +123,11 @@ namespace TP3 {
             int hauteur;                            // La hauteur de ce noeud (afin de maintenir l'équilibre de l'arbre AVL)
 
             // Vous pouvez ajouter ici un contructeur de NoeudDictionnaire
+            NoeudDictionnaire(const std::string &motOriginal, const std::string &motTraduit):
+            mot(motOriginal), gauche(0), droite(0), traductions(1)
+            {
+                traductions.push_back(motTraduit);
+            }
         };
 
         NoeudDictionnaire *racine;        // La racine de l'arbre des mots
@@ -134,19 +140,43 @@ namespace TP3 {
         void _detruire(NoeudDictionnaire *&p_root);
 
         //Verifie si un mot est deja dans le dico
-        NoeudDictionnaire *_appartient(NoeudDictionnaire *const &p_root, const std::string &mot) const;
+        NoeudDictionnaire *_appartient(NoeudDictionnaire * const &p_root, const std::string &mot) const;
 
         //Met la hauteur de l'arbre a jour.
         void _majHauteur(NoeudDictionnaire *&p_root);
 
-        //Retourne la hauteur d' noeud
+        //Retourne la hauteur d'un noeud
         int _hauteur(NoeudDictionnaire * &p_root) const;
 
+        //Tous les zigzig et zigzag pour faire les rotations
         void _zigZigGauche(NoeudDictionnaire * &p_noeudCritique);
         void _zigZagGauche(NoeudDictionnaire * &p_noeudCritique);
         void _zigZigDroite(NoeudDictionnaire * &p_noeudCritique);
         void _zigZagDroite(NoeudDictionnaire * &p_noeudCritique);
 
+        //Met a jours la hauteur d'un noeud
+        void _miseAJourHauteurNoeud(NoeudDictionnaire * &p_root);
+
+        //Fonction qui balance l'arbre AVL en utilisant les zigzig/zigzag
+        void _balancerUnNoeud(NoeudDictionnaire * &p_root);
+
+        //Fonctions pour verifier debalancement de NC et NSC
+        bool _debalancementAGauche(NoeudDictionnaire * &p_root) const;
+        bool _debalancementADroite(NoeudDictionnaire * &p_root) const;
+        bool _sousArbrePencheAGauche(NoeudDictionnaire * &p_root) const;
+        bool _sousArbrePencheADroite(NoeudDictionnaire * &p_root) const;
+        //Fonction recursive pour ajouter mot
+        void _insererAVL(NoeudDictionnaire * &p_root, const std::string &motOriginal, const std::string &motTraduit);
+        //Fonction recursive pour ajouter une traduction
+        NoeudDictionnaire *& _ajouterTraduction(NoeudDictionnaire *&p_root, const std::string &mot, const std::string &motTraduit);
+        //Fonction recursive pour supprimer un mot
+        void _supprimerAVL(NoeudDictionnaire * &p_root, const std::string &motASupprimer);
+        //Fonction pour verifier si noeud a 2 fils
+        bool _aDeuxfils(NoeudDictionnaire * &p_root) const;
+        //Fonction qui retourne le plus petit noeud d'un arbre
+        NoeudDictionnaire * _min(NoeudDictionnaire *p_root) const;
+        //Fonction pour trouver distance entre 2 mots  en utilisant l'algorithm de Levenshtein (edit distance)
+        int _getEditDistance(const std::string &mot1, const std::string &mot2);
     };
 }
 #endif /* DICO_H_ */

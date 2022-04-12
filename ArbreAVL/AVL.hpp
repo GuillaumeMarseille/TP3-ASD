@@ -460,7 +460,8 @@ void Arbre<E>::_enleverAVL(Noeud *& p_arb, const E& p_data) {
         }
         else {
             // On a deux fils: cas compliqué.
-            // On interchange la valeur du noeud avec celle de son successeur (minimum dans le sous-arbre de droite).
+            // On interchange la valeur du noeud avec celle de son successeur (minimum dans le sous-arbre de droite)
+            // Successeur minimal droitx
             Noeud * minDroite = _min(p_arb->m_droite);
             std::swap(p_arb->m_data, minDroite->m_data);
 
