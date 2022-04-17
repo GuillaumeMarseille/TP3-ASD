@@ -47,7 +47,7 @@ namespace TP3 {
         //Ici, 1 représente le fait que les 2 mots sont identiques, 0 représente le fait que les 2 mots sont complètements différents
         //On retourne une valeur entre 0 et 1 quantifiant la similarité entre les 2 mots donnés
         //Vous pouvez utiliser par exemple la distance de Levenshtein, mais ce n'est pas obligatoire !
-        double similitude(const std::string &mot1, const std::string &mot2);
+        double similitude(const std::string &mot1, const std::string &mot2S) const;
 
 
         //Suggère des corrections pour le mot motMalEcrit sous forme d'une liste de mots, dans un vector, à partir du dictionnaire
@@ -105,6 +105,8 @@ namespace TP3 {
             return out;
         }
 
+        //Methode publique ajoutee:
+        bool estBalancee() const;
 
     private:
 
@@ -124,7 +126,7 @@ namespace TP3 {
 
             // Vous pouvez ajouter ici un contructeur de NoeudDictionnaire
             NoeudDictionnaire(const std::string &motOriginal, const std::string &motTraduit):
-            mot(motOriginal), gauche(0), droite(0), traductions(1)
+            mot(motOriginal), gauche(0), droite(0), traductions(0)
             {
                 traductions.push_back(motTraduit);
             }
@@ -168,7 +170,7 @@ namespace TP3 {
         //Fonction recursive pour ajouter mot
         void _insererAVL(NoeudDictionnaire * &p_root, const std::string &motOriginal, const std::string &motTraduit);
         //Fonction recursive pour ajouter une traduction
-        NoeudDictionnaire *& _ajouterTraduction(NoeudDictionnaire *&p_root, const std::string &mot, const std::string &motTraduit);
+        NoeudDictionnaire *& _trouverMot(NoeudDictionnaire *&p_root, const std::string &mot) const;
         //Fonction recursive pour supprimer un mot
         void _supprimerAVL(NoeudDictionnaire * &p_root, const std::string &motASupprimer);
         //Fonction pour verifier si noeud a 2 fils
@@ -176,7 +178,10 @@ namespace TP3 {
         //Fonction qui retourne le plus petit noeud d'un arbre
         NoeudDictionnaire * _min(NoeudDictionnaire *p_root) const;
         //Fonction pour trouver distance entre 2 mots  en utilisant l'algorithm de Levenshtein (edit distance)
-        int _getEditDistance(const std::string &mot1, const std::string &mot2);
+        unsigned int _getEditDistance(const std::string &first, const std::string &second) const;
+        //Fonction pour parcourir le dictionnaire en PreOrdre
+        void _parcousSuggestion(NoeudDictionnaire *p_root, std::vector<std::pair <double,
+                std::string>> &p_vectPair, std::string p_motMalEcrit) const;
     };
 }
 #endif /* DICO_H_ */

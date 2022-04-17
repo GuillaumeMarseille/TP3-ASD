@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include "Dictionnaire.h"
+#include "algorithm"
 
 using namespace std;
 using namespace TP3;
@@ -51,6 +52,11 @@ int main()
 	    // Affichage du dictionnaire niveau par niveau
 	    cout << dictEnFr << endl;
 
+        //Verification que l'arbre est bien balance
+        if (dictEnFr.estBalancee()){
+            cout << "*L'arbre est balancé*" << endl;
+        }
+
 		vector<string> motsAnglais; //Vecteur qui contiendra les mots anglais de la phrase entrée
 
 		//Lecture de la phrase en anglais
@@ -71,7 +77,61 @@ int main()
 		for (vector<string>::const_iterator i = motsAnglais.begin(); i != motsAnglais.end(); i++)
 			// Itération dans les mots anglais de la phrase donnée
 		{
-			// À compléter ...
+
+            if (dictEnFr.appartient(*i))
+            {
+                vector<string> traduction = dictEnFr.traduit(*i);
+                if (traduction.size() > 1){
+                    cout << "Plusieurs traductions sont possibles pour le mot '" << *i << "'. Veuillez en choisir une parmi les suivantes :" << endl;
+                    for (int i = 0; i < traduction.size(); i++){
+                        cout << i + 1 << ". " << traduction[i] << "." << endl;
+                    }
+                    cout << "Votre choix: ";
+                    size_t index;
+                    cin >> index;
+                    motsFrancais.push_back(traduction[index - 1]);
+                }
+                else{
+                    motsFrancais.push_back(traduction[0]);
+                }
+
+
+            }
+            else
+            {
+                vector<string> suggestion = dictEnFr.suggereCorrections(*i);
+                if (suggestion.size() > 0)
+                {
+                    cout << "Le mot '" << *i << "' n'existe pas dans le dictionnaire. Veuillez choisir une des suggestions suivantes :" << endl;
+                    for (int i = 0; i < suggestion.size(); i++){
+                        cout << i + 1 << ". " << suggestion[i] << "." << endl;}
+
+                    cout << "Votre choix: ";
+                    size_t index;
+                    cin >> index;
+                    string motCorrigeAnglais = suggestion[index - 1];
+
+                    vector<string> traduction = dictEnFr.traduit(motCorrigeAnglais);
+                    if (traduction.size() > 1){
+                        cout << "Plusieurs traductions sont possibles pour le mot '" << motCorrigeAnglais << "'. Veuillez en choisir une parmi les suivantes :" << endl;
+                        for (int i = 0; i < traduction.size(); i++){
+                            cout << i + 1 << ". " << traduction[i] << "." << endl;
+                        }
+                        cout << "Votre choix: ";
+                        size_t index;
+                        cin >> index;
+                        motsFrancais.push_back(traduction[index - 1]);
+                    }
+                    else{
+                        motsFrancais.push_back(traduction[0]);
+                    }
+
+                }
+                else {
+                    cout << "Le mot '" << *i << "' n'existe pas dans le dictionnaire et nous n'avons trouvé aucun mot similaire." << endl;
+                }
+
+            }
 		}
 
 		stringstream phraseFrancais; // On crée un string contenant la phrase,
