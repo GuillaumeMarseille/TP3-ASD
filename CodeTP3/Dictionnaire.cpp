@@ -596,15 +596,4 @@ namespace TP3 {
         }
     }
 
-    /**
-     * \brief Methode qui verifie si l'arbre est balance
-     * \return vrai si arbre balance
-     */
-    bool Dictionnaire::estBalancee() const {
-        if (racine == 0) {//Si arbre vide
-            return false;
-        }
-        //Compare hauteur gauche et droite
-        return !(abs(_hauteur(racine->gauche) - _hauteur(racine->droite)) >= 2);
-    }
 }//Fin du namespace

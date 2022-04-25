@@ -1,7 +1,7 @@
 /**
  * \file Principal.cpp
  * \brief Fichier de chargement pour le dictionnaire, avec interface de traduction
- * \author IFT-2008, Étudiant(e)
+ * \author IFT-2008, Guillaume Marseille
  * \version 0.1
  * \date avril 2022
  *
@@ -51,11 +51,6 @@ int main()
 
 	    // Affichage du dictionnaire niveau par niveau
 	    cout << dictEnFr << endl;
-
-        //Verification que l'arbre est bien balance
-        if (dictEnFr.estBalancee()){
-            cout << "*L'arbre est balancé*" << endl;
-        }
 
 		vector<string> motsAnglais; //Vecteur qui contiendra les mots anglais de la phrase entrée
 

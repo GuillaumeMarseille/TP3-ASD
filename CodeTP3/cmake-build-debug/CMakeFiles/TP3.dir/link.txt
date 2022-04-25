@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++11 -g CMakeFiles/TP3.dir/Dictionnaire.cpp.o CMakeFiles/TP3.dir/Principal.cpp.o -o TP3 

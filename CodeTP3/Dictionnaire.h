@@ -1,7 +1,7 @@
 /**
  * \file Dictionnaire.h
  * \brief Ce fichier contient l'interface d'un dictionnaire.
- * \author IFT-2008, Étudiant(e)
+ * \author IFT-2008, Guillaume Marseille
  * \version 0.1
  * \date avril 2022
  *
@@ -104,9 +104,6 @@ namespace TP3 {
             }
             return out;
         }
-
-        //Methode publique ajoutee:
-        bool estBalancee() const;
 
     private:
 
